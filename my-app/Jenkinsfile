@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+    environment {
+        NODEJS_VERSION = '18.15.0' // Set the Node.js version you have installed on the Jenkins server
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install dependencies') {
+            steps {
+                script {
+                    // Install Node.js using NodeJS Plugin
+                    withNodeJS(nodeJSInstallationName: NODEJS_VERSION) {
+                        sh 'npm install'
+                    }
+                }
+            }
+        }
+
+        stage('Build Angular project') {
+            steps {
+                script {
+                    withNodeJS(nodeJSInstallationName: NODEJS_VERSION) {
+                        sh 'ng build --prod'
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to production') {
+            steps {
+                // Add your deployment steps here (e.g., copying files to a web server, pushing to a cloud service, etc.)
+                // For the sake of this example, let's assume we are copying the built files to a web server.
+                sh 'rsync -avz ./dist/ user@your-server-ip:/path/to/destination/'
+            }
+        }
+    }
+}
