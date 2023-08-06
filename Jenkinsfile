@@ -33,7 +33,7 @@ pipeline {
             steps {
                 // Assuming you have a Docker registry where you push the built image
                 script {
-                    def dockerRegistry = 'https://your-docker-registry-url'
+                    def dockerRegistry = 'https://index.docker.io/v1'
                     def dockerCredentials = 'Docker'
                     def dockerImageTag = 'JenkinsTag'
                     
