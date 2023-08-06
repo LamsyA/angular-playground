@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'docker build -t lamsy/deno-docker .'
+        sh 'docker build -t lamsy/deno-docker:pipeline .'
       }
     }
     stage('Login') {
