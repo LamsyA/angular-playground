@@ -1,21 +1,10 @@
 pipeline {
-  agent any 
-
-  
-
-  stages {
-      stage('Checkout') {
+    agent any
+    stages {
+        stage('Stage 1') {
             steps {
-                checkout scm
+                echo 'Hello world!'
             }
-      }
-
-      stage('Docker login'){
-        steps {
-          sh 'echo here'
         }
-      }
-
-     
-   }
+    }
 }
