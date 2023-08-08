@@ -4,7 +4,7 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
   environment {
-    DOCKERHUB_CREDENTIALS = credentials('lamsy-dockerhub')
+    DOCKERHUB_CREDENTIALS = credentials('docker-Auth')
   }
   stages {
     stage('Build') {
