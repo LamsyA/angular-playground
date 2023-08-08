@@ -1,22 +1,31 @@
 pipeline {
-    agent any
-
-    stages {
-        stage('SCM') {
-            steps {
-                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/LamsyA/angular-playground.git'
-            }
-        }
-        stage('Docker Build and Push') {
-            steps {
-                script {
-                    // This step should not normally be used in your script. Consult the inline help for details.
-                    withDockerRegistry(credentialsId: 'Docker', toolName: 'Docker')  {
-                        bat "docker build -t lamsy/deno-docker:pipeline ."
-                        bat "docker push lamsy/deno-docker:pipeline1"
-                    }
-                }
-            }
-        }
+  agent any
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '5'))
+  }
+  environment {
+    DOCKERHUB_CREDENTIALS = credentials('lamsy-dockerhub')
+  }
+  stages {
+    stage('Build') {
+      steps {
+        bat 'docker build -t lamsy/deno-docker .'
+      }
     }
+    stage('Login') {
+      steps {
+        bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+      }
+    }
+    stage('Push') {
+      steps {
+        bat 'docker push lamsy/deno-docker'
+      }
+    }
+  }
+  post {
+    always {
+      bat 'docker logout'
+    }
+  }
 }
