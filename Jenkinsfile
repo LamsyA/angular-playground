@@ -4,7 +4,7 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
   environment {
-    DOCKERHUB_CREDENTIALS = credentials('docker-Auth')
+    DOCKERHUB_CREDENTIALS = credentials('z')
   }
   stages {
     stage('Build') {
@@ -19,7 +19,7 @@ pipeline {
     }
     stage('Push') {
       steps {
-        bat 'docker push lamsy/deno-docker'
+        bat 'docker push lamsy/deno-docker:pipeline'
       }
     }
   }
