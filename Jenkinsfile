@@ -1,10 +1,17 @@
+
+
 pipeline {
-    agent any
-    stages {
-        stage('Stage 1') {
+  agent any 
+  stages {
+      stage('Checkout') {
             steps {
-                echo 'Hello world!'
+                checkout scm
             }
+      }
+      stage('Docker login'){
+        steps {
+          bat 'echo here'
         }
-    }
+      }     
+   }
 }
