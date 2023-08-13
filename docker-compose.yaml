@@ -1,0 +1,8 @@
+version: '3'
+services:
+  deno-app:
+    build:
+      context: .
+      dockerfile: Dockerfile # Your Dockerfile for Deno
+    ports:
+      - "8001:8001" # Port mapping, host:container

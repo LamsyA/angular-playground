@@ -1,8 +1,10 @@
-import { serve } from 'https://deno.land/std@0.136.0/http/server.ts'
-import { serve } from 'https://deno.land/std@0.136.0/http/server.ts'
+import { serve } from "https://deno.land/std/http/server.ts";
 
-function requestHandler() {
-  return new Response("Hey, I'm a server")
+const PORT = 3000;
+const server = serve({ port: PORT });
+
+console.log(`Server is running on http://localhost:${PORT}/`);
+
+for await (const request of server) {
+  request.respond({ body: "Hello, World!\n" });
 }
-
-serve(requestHandler)
